@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/checkout', 'CartController@checkout');
+// Route::get('/checkout', 'CartController@checkout');
+// Route::get('/checkout', 'CartController@checkout');
+// Route::get('/checkout', 'CartController@checkout');
+// Route::get('/checkout', 'CartController@checkout');
