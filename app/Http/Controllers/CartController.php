@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -44,7 +45,7 @@ class CartController extends Controller
      * @param  \App\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(cart $cart)
+    public function show(Cart $cart)
     {
         //
     }
@@ -55,7 +56,7 @@ class CartController extends Controller
      * @param  \App\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function edit(cart $cart)
+    public function edit(Cart $cart)
     {
         //
     }
@@ -67,7 +68,7 @@ class CartController extends Controller
      * @param  \App\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cart $cart)
+    public function update(Request $request, Cart $cart)
     {
         //
     }
@@ -78,13 +79,23 @@ class CartController extends Controller
      * @param  \App\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cart $cart)
+    public function destroy(Cart $cart)
     {
         //
     }
 
-    public function checkout()
+    public function checkout(Cart $cart)
     {
         echo "here we go";
+        $transaction              = new Transation;
+        $transaction->cart_id     = $cart->id;
+        $transaction->items_count = $cart->items()->count();
+        $transaction->amount      = Transaction::getAmount($cart);
+
+        if (!$transaction->save()) {
+            return response('Sorry, error saving transaction.');
+        }
+        return response('Success! Transaction saved');
+
     }
 }
